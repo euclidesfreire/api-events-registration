@@ -15,10 +15,10 @@ import br.com.nlw.events.models.Subscription;
 public class RankingService {
     
     @Autowired
-    SubscriptionService subscriptionService;
+    private SubscriptionService subscriptionService;
 
     @Autowired
-    EventService eventService;
+    private EventService eventService;
 
     public List<?> findRanking(String prettyName){
         

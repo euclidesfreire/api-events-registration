@@ -5,29 +5,25 @@ import org.springframework.stereotype.Service;
 
 import br.com.nlw.events.models.Indication;
 import br.com.nlw.events.models.Subscription;
+import br.com.nlw.events.models.User;
 import br.com.nlw.events.repositories.IndicationRepository;
 
 @Service
 public class IndicationService {
 
     @Autowired
-    IndicationRepository indicationRepository;
+    private IndicationRepository indicationRepository;
 
-    @Autowired
-    SubscriptionService subscriptionService;
-
-    public void add(Indication indication){
-
-        //Get Indication Subscription 
-        Subscription subscription =  indication.getSubscriptionIndication();
-
-        //indicationCount + 1
-        Integer indicationCount = subscription.getIndicationCount() + 1;
-
-        subscription.setIndicationCount(indicationCount);
-
-        //Update subscription for add indicationCount
-        subscriptionService.save(subscription);
+    /**
+     * Add Indication New
+     * 
+     * @param subscription
+     * @param user
+     */
+    public void add(Subscription subscription, User user){
+        Indication indication = new Indication();
+        indication.setSubscriptionIndication(subscription);
+        indication.setUser(user);
 
         indicationRepository.save(indication);
     }

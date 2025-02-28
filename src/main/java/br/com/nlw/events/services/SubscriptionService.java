@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nlw.events.dto.SubscriptionResponseDTO;
 import br.com.nlw.events.exceptions.AlreadyExistsException;
 import br.com.nlw.events.exceptions.NotFoundException;
 import br.com.nlw.events.models.Event;
-import br.com.nlw.events.models.Indication;
 import br.com.nlw.events.models.Subscription;
 import br.com.nlw.events.models.User;
 import br.com.nlw.events.repositories.SubscriptionRepository;
@@ -29,7 +29,14 @@ public class SubscriptionService {
     @Autowired
     private IndicationService indicationService;
 
-    public Subscription add(String eventPrettyName, User userNew) {
+    /**
+     * Add Subscription New
+     * 
+     * @param eventPrettyName
+     * @param userNew
+     * @return SubscriptionResponseDTO
+     */
+    public SubscriptionResponseDTO add(String eventPrettyName, User userNew) {
 
         //check e find event
         Event event = eventService.findByPrettyName(eventPrettyName);
@@ -45,29 +52,45 @@ public class SubscriptionService {
         subscriptionNew.setEvent(event);
         subscriptionNew.setUser(user);
 
-        return subscriptionRepository.save(subscriptionNew);
+        Subscription subscriptionSave = subscriptionRepository.save(subscriptionNew);
+
+        String indicationUrl = indicationService.getUrl(eventPrettyName, subscriptionSave.getId());
+
+        return new SubscriptionResponseDTO(subscriptionSave.getId(), user, indicationUrl);
     }
 
-    public Subscription addByIndication(
+    /**
+     * Add Subscription New by Indication
+     * 
+     * @param eventPrettyName
+     * @param user
+     * @param subscriptionIndicationId
+     * @return SubscriptionResponseDTO
+     */
+    public SubscriptionResponseDTO addByIndication(
         String eventPrettyName, 
         User user, 
         Integer subscriptionIndicationId
     ){
-        Subscription subscription = add(eventPrettyName, user);
-
         //Get subscription indication
         Subscription subscriptionIndication = subscriptionRepository
         .findById(subscriptionIndicationId)
         .orElseThrow(() -> new NotFoundException("Subscription indication not found."));
-    
 
-        Indication indication = new Indication();
-        indication.setSubscriptionIndication(subscriptionIndication);
-        indication.setUser(user);
+        //Add Subscription New 
+        SubscriptionResponseDTO subscriptionNew = add(eventPrettyName, user);
 
-        indicationService.add(indication);
+        //indicationCount + 1
+        Integer indicationCount = subscriptionIndication.getIndicationCount() + 1;
 
-        return subscription;
+        subscriptionIndication.setIndicationCount(indicationCount);
+
+        //Update subscription for add indicationCount
+        save(subscriptionIndication);
+
+        indicationService.add(subscriptionIndication, subscriptionNew.user());
+
+        return subscriptionNew;
     }
 
     public Subscription save(Subscription subscriptionNew) {
@@ -92,12 +115,4 @@ public class SubscriptionService {
         Event event = eventService.findByPrettyName(prettyName);
         return (List<Subscription>) subscriptionRepository.findAllByEvent(event);
     }
-
-    /**
-     * /prettyName/subscriptionId
-     */
-    // public getIndicationLink(){
-
-    // String indicationLink = eventService.findByPrettyName(prettyName)
-    // }
 }

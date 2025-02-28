@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.nlw.events.dto.SubscriptionResponseDTO;
 import br.com.nlw.events.exceptions.AlreadyExistsException;
 import br.com.nlw.events.exceptions.NotFoundException;
-import br.com.nlw.events.models.Subscription;
 import br.com.nlw.events.models.User;
 import br.com.nlw.events.services.IndicationService;
 import br.com.nlw.events.services.RankingService;
@@ -27,9 +26,6 @@ public class SubscriptionController {
     private SubscriptionService subscriptionService;
 
     @Autowired
-    private IndicationService indicationService;
-
-    @Autowired
     private RankingService rankingService;
 
     /**
@@ -37,7 +33,7 @@ public class SubscriptionController {
      * 
      * @param prettyName
      * @param user
-     * @return
+     * @return SubscriptionResponseDTO
      */
     @PostMapping("/subscription/{prettyName}")
     public ResponseEntity<?> postSubscription(
@@ -46,12 +42,9 @@ public class SubscriptionController {
     ){
         try {
 
-            Subscription subscription = subscriptionService.add(prettyName, user);
+            SubscriptionResponseDTO subscriptionNew = subscriptionService.add(prettyName, user);
 
-            String indicationUrl = indicationService.getUrl(prettyName, subscription.getId());
-
-            return ResponseEntity.ok()
-            .body(new SubscriptionResponseDTO(subscription.getId(), indicationUrl));
+            return ResponseEntity.ok().body(subscriptionNew);
 
         } catch (NotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
@@ -76,13 +69,10 @@ public class SubscriptionController {
     ){
         try {
             //Add new subscription by subscription indication
-            Subscription subscription = subscriptionService
+            SubscriptionResponseDTO subscriptionNew = subscriptionService
             .addByIndication(prettyName, user, subscriptionIndicationId);
 
-            String indicationUrl = indicationService.getUrl(prettyName, subscription.getId());
-
-            return ResponseEntity.ok()
-            .body(new SubscriptionResponseDTO(subscription.getId(), indicationUrl));
+            return ResponseEntity.ok().body(subscriptionNew);
 
         } catch (NotFoundException e) {
             return ResponseEntity.status(404).body(e.getMessage());
