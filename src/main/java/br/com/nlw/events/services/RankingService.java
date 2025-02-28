@@ -17,9 +17,6 @@ public class RankingService {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @Autowired
-    private EventService eventService;
-
     public List<?> findRanking(String prettyName){
         
             List<?> ranking = subscriptionService.findAllByEvent(prettyName).stream()

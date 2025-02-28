@@ -77,6 +77,11 @@ public class SubscriptionService {
         .findById(subscriptionIndicationId)
         .orElseThrow(() -> new NotFoundException("Subscription indication not found."));
 
+        //If eventPrettyName equal event of subscriptionIndicationId
+        if(!subscriptionIndication.getEvent().getPrettyName().equals(eventPrettyName)){
+            throw new NotFoundException("Subscription indication not found in event: " + eventPrettyName);
+        }
+
         //Add Subscription New 
         SubscriptionResponseDTO subscriptionNew = add(eventPrettyName, user);
 
@@ -95,6 +100,15 @@ public class SubscriptionService {
 
     public Subscription save(Subscription subscriptionNew) {
         return subscriptionRepository.save(subscriptionNew);
+    }
+
+    public Subscription findByIdAndEvent(Event event, User user) {
+
+        Subscription subscription = subscriptionRepository
+                .findByEventAndUser(event, user)
+                .orElseThrow(() -> new NotFoundException("Subscription not found."));
+
+        return subscription;
     }
 
     public Subscription findByEventAndUser(Event event, User user) {
