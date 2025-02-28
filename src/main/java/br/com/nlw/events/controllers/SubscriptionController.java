@@ -8,7 +8,6 @@ import br.com.nlw.events.dto.SubscriptionResponseDTO;
 import br.com.nlw.events.exceptions.AlreadyExistsException;
 import br.com.nlw.events.exceptions.NotFoundException;
 import br.com.nlw.events.models.User;
-import br.com.nlw.events.services.IndicationService;
 import br.com.nlw.events.services.RankingService;
 import br.com.nlw.events.services.SubscriptionService;
 

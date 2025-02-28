@@ -28,6 +28,13 @@ public class IndicationService {
         indicationRepository.save(indication);
     }
 
+    /**
+     * Get URL indication
+     * 
+     * @param eventPrettyName
+     * @param subscriptionId
+     * @return String url
+     */
     public String getUrl(String eventPrettyName, Integer subscriptionId){
         String url = "/subscription/" + eventPrettyName + "/" + subscriptionId;
 

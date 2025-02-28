@@ -30,9 +30,13 @@ public class EventController {
     public ResponseEntity<?> postEvent(@RequestBody Event event) {
 
         try {
-            return ResponseEntity.ok().body(this.eventService.add(event));
-        } catch (Exception e) {
-            return ResponseEntity.status(404).body(e.getMessage());
+            return ResponseEntity
+                    .ok()
+                    .body(eventService.add(event));
+        } catch (NotFoundException e) {
+            return ResponseEntity
+                    .status(404)
+                    .body(e.getMessage());
         }
 
     }

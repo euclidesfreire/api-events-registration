@@ -1,7 +1,6 @@
 package br.com.nlw.events.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,8 +119,9 @@ public class SubscriptionService {
         return subscription;
     }
 
-    public Optional<Subscription> findById(Integer id) {
-        return subscriptionRepository.findById(id);
+    public Subscription findById(Integer id) {
+        return subscriptionRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Subscription not found."));
     }
 
     public List<Subscription> findAllByEvent(String prettyName) {

@@ -22,12 +22,18 @@ public class EventService {
      * 
      * @return Event envet
     */
-    public Event add(Event event){
+    public Event add(Event eventNew){
 
         //Create PrettyName sep "-"
-        event.setPrettyName(event.getTitle().toLowerCase().replaceAll(" ", "-"));
+        eventNew.setPrettyName(eventNew.getTitle().toLowerCase().replaceAll(" ", "-"));
 
-        return this.eventRepository.save(event);
+        //If Event Already Exists
+        eventRepository.findByPrettyName(eventNew.getPrettyName())
+        .ifPresent(event -> { throw new NotFoundException("Event Already Exists: " + event.getPrettyName()); });
+
+        Event event = eventRepository.save(eventNew);
+
+        return event;
     }
 
     /**
@@ -58,7 +64,7 @@ public class EventService {
      * 
      * @return Event
     */
-    public Event findByPrettyName(String prettyName) throws NotFoundException {
+    public Event findByPrettyName(String prettyName) {
         return eventRepository.findByPrettyName(prettyName)
         .orElseThrow(() -> new NotFoundException("Event not found by prettyName: "  + prettyName));
     }
