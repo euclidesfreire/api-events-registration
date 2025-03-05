@@ -38,7 +38,6 @@ public class EventController {
                     .status(404)
                     .body(e.getMessage());
         }
-
     }
     
     @GetMapping("/events")

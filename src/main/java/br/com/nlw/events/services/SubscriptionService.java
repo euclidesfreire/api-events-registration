@@ -44,7 +44,7 @@ public class SubscriptionService {
         User user = userService.add(userNew);
 
         if(subscriptionRepository.findByEventAndUser(event, user).isPresent()){
-            throw new AlreadyExistsException("Subscription Already Exists.");
+            throw new AlreadyExistsException("Subscription Already Exists in event: " + eventPrettyName);
         }
 
         Subscription subscriptionNew = new Subscription();
@@ -62,13 +62,13 @@ public class SubscriptionService {
      * Add Subscription New by Indication
      * 
      * @param eventPrettyName
-     * @param user
+     * @param userNew
      * @param subscriptionIndicationId
      * @return SubscriptionResponseDTO
      */
     public SubscriptionResponseDTO addByIndication(
         String eventPrettyName, 
-        User user, 
+        User userNew, 
         Integer subscriptionIndicationId
     ){
         //Get subscription indication
@@ -82,7 +82,7 @@ public class SubscriptionService {
         }
 
         //Add Subscription New 
-        SubscriptionResponseDTO subscriptionNew = add(eventPrettyName, user);
+        SubscriptionResponseDTO subscriptionNew = add(eventPrettyName, userNew);
 
         //indicationCount + 1
         Integer indicationCount = subscriptionIndication.getIndicationCount() + 1;
