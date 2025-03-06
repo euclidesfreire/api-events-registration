@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 public class EventController {
 
     @Autowired
-    private EventService eventService;  
-    
+    private EventService eventService;
+
     /**
      * 
      * @param event
@@ -28,20 +27,13 @@ public class EventController {
      */
     @PostMapping("/events")
     public ResponseEntity<?> postEvent(@RequestBody Event event) {
-
-        try {
-            return ResponseEntity
-                    .ok()
-                    .body(eventService.add(event));
-        } catch (NotFoundException e) {
-            return ResponseEntity
-                    .status(404)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity
+                .ok()
+                .body(eventService.add(event));
     }
-    
+
     @GetMapping("/events")
-    public List<Event> getAllEvents(){
+    public List<Event> getAllEvents() {
         return (List<Event>) this.eventService.findAll();
     }
 
@@ -51,29 +43,23 @@ public class EventController {
      * @return Ev
      */
     @GetMapping("/events/{id}")
-    public ResponseEntity<?> getEventById(@PathVariable Integer id){
-        try {
-            Event event = this.eventService.findById(id);
+    public ResponseEntity<?> getEventById(@PathVariable Integer id) {
+        Event event = this.eventService.findById(id);
 
-            return ResponseEntity.ok().body(event);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(event);
     }
 
     /**
      * 
      * @param prettyName
      * @return Event
-    */
+     */
     @GetMapping("/events/{prettyName}")
-    public ResponseEntity<?> getEventByPrettyName(@PathVariable String prettyName){
-        try {
-            Event event =  this.eventService.findByPrettyName(prettyName);
+    public ResponseEntity<?> getEventByPrettyName(@PathVariable String prettyName) {
 
-            return ResponseEntity.ok().body(event);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
-    }   
+        Event event = this.eventService.findByPrettyName(prettyName);
+
+        return ResponseEntity.ok().body(event);
+
+    }
 }

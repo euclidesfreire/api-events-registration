@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.nlw.events.dto.SubscriptionResponseDTO;
-import br.com.nlw.events.exceptions.AlreadyExistsException;
-import br.com.nlw.events.exceptions.NotFoundException;
 import br.com.nlw.events.models.User;
 import br.com.nlw.events.services.RankingService;
 import br.com.nlw.events.services.SubscriptionService;
@@ -38,18 +36,11 @@ public class SubscriptionController {
     public ResponseEntity<?> postSubscription(
         @PathVariable String prettyName, 
         @RequestBody User user
-    ){
-        try {
+    ) {
 
-            SubscriptionResponseDTO subscriptionNew = subscriptionService.add(prettyName, user);
+        SubscriptionResponseDTO subscriptionNew = subscriptionService.add(prettyName, user);
 
-            return ResponseEntity.ok().body(subscriptionNew);
-
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        } catch (AlreadyExistsException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(subscriptionNew);
     }
 
     /**
@@ -65,19 +56,13 @@ public class SubscriptionController {
         @PathVariable String prettyName, 
         @PathVariable Integer subscriptionIndicationId, 
         @RequestBody User user
-    ){
-        try {
-            //Add new subscription by subscription indication
-            SubscriptionResponseDTO subscriptionNew = subscriptionService
-            .addByIndication(prettyName, user, subscriptionIndicationId);
+    ) {
 
-            return ResponseEntity.ok().body(subscriptionNew);
+        // Add new subscription by subscription indication
+        SubscriptionResponseDTO subscriptionNew = subscriptionService
+        .addByIndication(prettyName, user, subscriptionIndicationId);
 
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        } catch (AlreadyExistsException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(subscriptionNew);
     }
 
     /**
@@ -88,11 +73,7 @@ public class SubscriptionController {
      */
     @GetMapping("/subscription/{prettyName}")
     public ResponseEntity<?>  getSubscription(@PathVariable String prettyName){
-         try {
-            return ResponseEntity.ok().body(subscriptionService.findAllByEvent(prettyName));
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(subscriptionService.findAllByEvent(prettyName));
     }
 
     /**
@@ -103,11 +84,7 @@ public class SubscriptionController {
      */
     @GetMapping("/subscription/{prettyName}/ranking")
     public ResponseEntity<?>  getRanking(@PathVariable String prettyName){
-        try {
-            return ResponseEntity.ok().body(rankingService.findRanking(prettyName));
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+        return ResponseEntity.ok().body(rankingService.findRanking(prettyName));
     }
 
     /**
@@ -120,11 +97,8 @@ public class SubscriptionController {
     @GetMapping("/subscription/{prettyName}/{subscriptionId}/ranking")
     public ResponseEntity<?> getRankingBySubscription(
             @PathVariable String prettyName,
-            @PathVariable Integer subscriptionId) {
-        try {
-            return ResponseEntity.ok().body(rankingService.findRankingBySubscription(prettyName, subscriptionId));
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
+            @PathVariable Integer subscriptionId
+    ){
+        return ResponseEntity.ok().body(rankingService.findRankingBySubscription(prettyName, subscriptionId));
     }
 }
