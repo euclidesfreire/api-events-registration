@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nlw.events.exceptions.AlreadyExistsException;
 import br.com.nlw.events.exceptions.NotFoundException;
 import br.com.nlw.events.models.Event;
 import br.com.nlw.events.repositories.EventRepository;
@@ -29,7 +30,7 @@ public class EventService {
 
         //If Event Already Exists
         eventRepository.findByPrettyName(eventNew.getPrettyName())
-        .ifPresent(event -> { throw new NotFoundException("Event Already Exists: " + event.getPrettyName()); });
+        .ifPresent(event -> { throw new AlreadyExistsException("Event Already Exists: " + event.getPrettyName()); });
 
         Event event = eventRepository.save(eventNew);
 
