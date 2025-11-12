@@ -3,7 +3,10 @@ package br.com.nlw.events.dto.event;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 public record CreateEventDTO(
@@ -16,18 +19,21 @@ public record CreateEventDTO(
     @Size(max=255)
     String location,
 
-    @NotBlank
+    @NotNull
+    @PositiveOrZero
     Double price,
 
-    @NotBlank
+    @NotNull
+    @Future
     LocalDate startDate,
 
-    @NotBlank
+    @NotNull
+    @Future
     LocalDate endDate,
 
-    @NotBlank
+    @NotNull
     LocalTime startTime,
 
-    @NotBlank
+    @NotNull
     LocalTime endTime
 ) {}

@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.nlw.events.components.ModelMapperComponent;
+import br.com.nlw.events.dto.event.CreateEventDTO;
+import br.com.nlw.events.dto.event.EventResponseDTO;
 import br.com.nlw.events.exceptions.AlreadyExistsException;
 import br.com.nlw.events.exceptions.NotFoundException;
 import br.com.nlw.events.models.Event;
@@ -16,14 +19,21 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired 
+    private ModelMapperComponent modelMapper;
+
     /**
      * Add new event
      * 
-     * @param Event envet
+     * @param CreateEventDTO 
      * 
-     * @return Event envet
+     * @return EventResponseDTO 
     */
-    public Event add(Event eventNew){
+    public EventResponseDTO add(CreateEventDTO eventDTO){
+
+        Event eventNew = this.modelMapper.map(eventDTO, Event.class);
+        System.out.println("eventNew: ");
+        System.out.println(eventNew.getTitle());
 
         //Create PrettyName sep "-"
         eventNew.setPrettyName(eventNew.getTitle().toLowerCase().replaceAll(" ", "-"));
@@ -34,7 +44,7 @@ public class EventService {
 
         Event event = eventRepository.save(eventNew);
 
-        return event;
+        return this.modelMapper.map(event, EventResponseDTO.class);
     }
 
     /**

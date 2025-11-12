@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.nlw.events.dto.event.CreateEventDTO;
+import br.com.nlw.events.dto.event.EventResponseDTO;
 import br.com.nlw.events.models.Event;
 import br.com.nlw.events.services.EventService;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +24,14 @@ public class EventController {
 
     /**
      * 
-     * @param event
-     * @return Event
+     * @param CreateEventDTO
+     * 
+     * @return EventResponseDTO
      */
     @PostMapping("/events")
-    public ResponseEntity<?> postEvent(@RequestBody Event event) {
+    public ResponseEntity<EventResponseDTO> postEvent(
+        @RequestBody @Valid CreateEventDTO event
+    ){
         return ResponseEntity
                 .ok()
                 .body(eventService.add(event));
