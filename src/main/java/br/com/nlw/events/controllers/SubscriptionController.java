@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nlw.events.dto.SubscriptionResponseDTO;
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.dto.subscription.SubscriptionResponseDTO;
+import br.com.nlw.events.domain.models.User;
 import br.com.nlw.events.services.RankingService;
 import br.com.nlw.events.services.SubscriptionService;
 

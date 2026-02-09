@@ -1,4 +1,4 @@
-package br.com.nlw.events.models;
+package br.com.nlw.events.domain.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nlw.events.exceptions.NotFoundException;
-import br.com.nlw.events.models.Subscription;
+import br.com.nlw.events.domain.models.Subscription;
 
 @Service
 public class RankingService {

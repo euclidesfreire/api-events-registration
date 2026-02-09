@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nlw.events.exceptions.NotFoundException;
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.models.User;
 import br.com.nlw.events.repositories.UserRepository;
 
 @Service

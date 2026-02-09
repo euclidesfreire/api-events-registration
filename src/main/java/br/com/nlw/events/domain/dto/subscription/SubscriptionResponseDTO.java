@@ -1,6 +1,6 @@
-package br.com.nlw.events.dto;
+package br.com.nlw.events.domain.dto.subscription;
 
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.models.User;
 
 public record SubscriptionResponseDTO (
     Integer id, 

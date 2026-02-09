@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nlw.events.dto.SubscriptionResponseDTO;
+import br.com.nlw.events.domain.dto.subscription.SubscriptionResponseDTO;
 import br.com.nlw.events.exceptions.AlreadyExistsException;
 import br.com.nlw.events.exceptions.NotFoundException;
-import br.com.nlw.events.models.Event;
-import br.com.nlw.events.models.Subscription;
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.models.Event;
+import br.com.nlw.events.domain.models.Subscription;
+import br.com.nlw.events.domain.models.User;
 import br.com.nlw.events.repositories.SubscriptionRepository;
 
 @Service

@@ -3,9 +3,9 @@ package br.com.nlw.events.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nlw.events.models.Indication;
-import br.com.nlw.events.models.Subscription;
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.models.Indication;
+import br.com.nlw.events.domain.models.Subscription;
+import br.com.nlw.events.domain.models.User;
 import br.com.nlw.events.repositories.IndicationRepository;
 
 @Service

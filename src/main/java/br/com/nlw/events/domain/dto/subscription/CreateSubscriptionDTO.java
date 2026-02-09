@@ -1,4 +1,4 @@
-package br.com.nlw.events.dto.subscription;
+package br.com.nlw.events.domain.dto.subscription;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

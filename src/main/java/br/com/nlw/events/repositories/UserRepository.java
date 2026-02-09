@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.models.User;
 
 
 public interface UserRepository extends CrudRepository<User,Integer> {

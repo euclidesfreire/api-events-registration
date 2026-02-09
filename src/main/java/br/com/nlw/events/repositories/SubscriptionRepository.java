@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.nlw.events.models.Event;
-import br.com.nlw.events.models.Subscription;
-import br.com.nlw.events.models.User;
+import br.com.nlw.events.domain.models.Event;
+import br.com.nlw.events.domain.models.Subscription;
+import br.com.nlw.events.domain.models.User;
 
 public interface SubscriptionRepository extends CrudRepository<Subscription, Integer> {
     public Iterable<Subscription> findAllByEvent(Event event);

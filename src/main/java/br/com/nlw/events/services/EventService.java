@@ -2,15 +2,15 @@ package br.com.nlw.events.services;
 
 import java.util.List;
 
+import br.com.nlw.events.domain.factory.EventFactory;
+import br.com.nlw.events.exceptions.AlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.nlw.events.components.ModelMapperComponent;
-import br.com.nlw.events.dto.event.CreateEventDTO;
-import br.com.nlw.events.dto.event.EventResponseDTO;
-import br.com.nlw.events.exceptions.AlreadyExistsException;
+import br.com.nlw.events.domain.dto.event.CreateEventDTO;
+import br.com.nlw.events.domain.dto.event.EventResponseDTO;
 import br.com.nlw.events.exceptions.NotFoundException;
-import br.com.nlw.events.models.Event;
+import br.com.nlw.events.domain.models.Event;
 import br.com.nlw.events.repositories.EventRepository;
 
 @Service
@@ -19,8 +19,8 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
 
-    @Autowired 
-    private ModelMapperComponent modelMapper;
+    @Autowired
+    private EventFactory eventFactory;
 
     /**
      * Add new event
@@ -30,10 +30,7 @@ public class EventService {
      * @return EventResponseDTO 
     */
     public EventResponseDTO add(CreateEventDTO eventDTO){
-
-        Event eventNew = this.modelMapper.map(eventDTO, Event.class);
-        System.out.println("eventNew: ");
-        System.out.println(eventNew.getTitle());
+        Event eventNew = this.eventFactory.toEvent(eventDTO);
 
         //Create PrettyName sep "-"
         eventNew.setPrettyName(eventNew.getTitle().toLowerCase().replaceAll(" ", "-"));
@@ -42,9 +39,9 @@ public class EventService {
         eventRepository.findByPrettyName(eventNew.getPrettyName())
         .ifPresent(event -> { throw new AlreadyExistsException("Event Already Exists: " + event.getPrettyName()); });
 
-        Event event = eventRepository.save(eventNew);
+        Event eventSaved = eventRepository.save(eventNew);
 
-        return this.modelMapper.map(event, EventResponseDTO.class);
+        return this.eventFactory.toEventResponseDTO(eventSaved);
     }
 
     /**

@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.nlw.events.dto.event.CreateEventDTO;
-import br.com.nlw.events.dto.event.EventResponseDTO;
-import br.com.nlw.events.models.Event;
+import br.com.nlw.events.domain.dto.event.CreateEventDTO;
+import br.com.nlw.events.domain.dto.event.EventResponseDTO;
+import br.com.nlw.events.domain.models.Event;
 import br.com.nlw.events.services.EventService;
 import jakarta.validation.Valid;
 

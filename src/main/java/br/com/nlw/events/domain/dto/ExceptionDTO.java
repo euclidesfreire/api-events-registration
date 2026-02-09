@@ -1,4 +1,4 @@
-package br.com.nlw.events.dto;
+package br.com.nlw.events.domain.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

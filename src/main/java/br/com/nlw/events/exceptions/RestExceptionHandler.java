@@ -10,7 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import br.com.nlw.events.dto.ExceptionDTO;
+import br.com.nlw.events.domain.dto.ExceptionDTO;
 
 /**
  * Global Controller Exception

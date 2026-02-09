@@ -1,8 +1,9 @@
-package br.com.nlw.events.models;
+package br.com.nlw.events.domain.models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -83,11 +84,11 @@ public class Event {
         this.price = price;
     }
 
-    public LocalDate getstartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setstartDate(LocalDate startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
